@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URI;
 
 /**
  * This is an abstract class that is inherited by Microbit.java, Hummingbird.java and Finch.java.
@@ -16,7 +17,7 @@ import java.net.URL;
  */
 abstract class Robot {
 	// Variables used to make http request to control the micro:bit (and Hummingbird Bit)
-    protected HttpURLConnection connection = null;
+    protected HttpURLConnection connection = null; 
     protected static String baseUrl = "http://127.0.0.1:30061/hummingbird/";
     protected URL requestUrl;
     
@@ -105,7 +106,8 @@ abstract class Robot {
         long requestStartTime = System.currentTimeMillis();
 	    String responseString = "Not Connected";
         try {
-            requestUrl = new URL(URLRequest);
+            // requestUrl = new URL(URLRequest);
+            requestUrl = URI.create(URLRequest).toURL();
             connection = (HttpURLConnection) requestUrl.openConnection();
             connection.setRequestMethod("GET");
             //connection.setDoOutput(true);
